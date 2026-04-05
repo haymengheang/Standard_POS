@@ -1,0 +1,97 @@
+/* <style data-purpose="layout-variables"> */
+    :root {
+      --primary-orange: #ff6b00;
+      --primary-orange-hover: #e66000;
+      --sidebar-bg: #ffffff;
+      --main-bg: #f8f9fa;
+      --text-main: #334155;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--main-bg);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+  /* </style> */
+/* <style data-purpose="sidebar-navigation"> */
+    .sidebar {
+      width: 260px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background-color: var(--sidebar-bg);
+      border-right: 1px solid var(--border-color);
+      z-index: 1000;
+      padding: 1.5rem 1rem;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.25rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-link:hover {
+      background-color: #f1f5f9;
+      color: var(--primary-orange);
+    }
+
+    .nav-link.active {
+      background-color: #fff4ed;
+      color: var(--primary-orange);
+      font-weight: 600;
+    }
+
+    .sidebar-brand {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary-orange);
+      margin-bottom: 2.5rem;
+      padding-left: 1rem;
+    }
+  /* </style>
+<style data-purpose="top-navigation"> */
+    .top-navbar {
+      margin-left: 260px;
+      height: 70px;
+      background-color: #fff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .search-bar-top {
+      width: 300px;
+      position: relative;
+    }
+
+    .search-bar-top .form-control {
+      background-color: #f1f5f9;
+      border: none;
+      padding-left: 2.5rem;
+      border-radius: 10px;
+    }
+
+    .search-bar-top i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+  /* </style>
+<style data-purpose="content-area"> */
