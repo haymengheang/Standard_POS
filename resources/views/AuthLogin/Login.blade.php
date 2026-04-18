@@ -84,7 +84,7 @@
             </p>
 
             <div class="mt-4">
-                <div class="icon-box">📦 Inventory123</div>
+                <div class="icon-box">📦 Inventory</div>
                 <div class="icon-box">📊 Reports</div>
                 <div class="icon-box">🚚 Orders</div>
             </div>
