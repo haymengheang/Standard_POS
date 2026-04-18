@@ -109,7 +109,7 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label>Email12</label>
+                        <label>Email</label>
                         <input type="email" name="email" class="form-control" placeholder="Enter email">
                     </div>
 
