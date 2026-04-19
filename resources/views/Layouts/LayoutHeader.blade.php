@@ -33,10 +33,14 @@ function active($route) {
 <div class="vr mx-2" style="height: 30px;"></div>
 <div class="d-flex align-items-center gap-2">
 <div class="text-end d-none d-sm-block">
-<div class="fw-bold small">Alex Rivera</div>
-<div class="text-muted" style="font-size: 0.7rem;">Admin Account</div>
+<div class="fw-bold small">{{ auth()->user()->name ?? 'System User' }}</div>
+<div class="text-muted" style="font-size: 0.7rem;">{{ auth()->user()->email ?? 'Authenticated Account' }}</div>
 </div>
 <img alt="User Profile" height="40px" width="40px" class="rounded-circle border" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMp3fXTNt_wJeOsdNheI_vzVAgzd7XS1ObyVUEqAVu03h8rBEgEi7EbdPB9OTY0qnIWa1vh4lVQhExsnmWCL9fQBZeOEnDOCv1gwBkrgZpTZOo-ISlHg1EU1HTR42xfJ7-PVd2XJzJwn2F3OXemYnq-RwulMGvMAYyMJsqKSBgT9i5FUrmR5pEDshqvDCjC1D8F0VaynDf9vE96Q8OBl0YuXtBvqYNLXxCVwWq6zY6_jvDxIMFeEvOvvSLEpNZ0fRQTgiQwFud3kg"/>
 </div>
+<form method="POST" action="{{ route('logout') }}">
+@csrf
+<button class="btn btn-outline-secondary btn-sm" type="submit">Logout</button>
+</form>
 </div>
 </header>

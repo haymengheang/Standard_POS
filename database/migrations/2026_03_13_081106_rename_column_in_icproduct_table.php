@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('icproduct', function (Blueprint $table) {
-            $table->renameColumn('PRICE','price');
-            $table->renameColumn('PRODUCTID','productid');
-            $table->renameColumn('PRODUCTNAME','productname');
-            $table->renameColumn('PRODUCTNAME2','productname2');
-            $table->renameColumn('UNIT_OF_MEASURE','unit_of_measure');
-            $table->renameColumn('IMGE','image');
-            $table->renameColumn('PRODUCT_LINE','product_line');
-            $table->renameColumn('OTHER_PRICE','other_price');
+            // $table->renameColumn('PRICE','price');
+            // $table->renameColumn('PRODUCTID','productid');
+            // $table->renameColumn('PRODUCTNAME','productname');
+            // $table->renameColumn('PRODUCTNAME2','productname2');
+            // $table->renameColumn('UNIT_OF_MEASURE','unit_of_measure');
+            // $table->renameColumn('IMGE','image');
+            // $table->renameColumn('PRODUCT_LINE','product_line');
+            // $table->renameColumn('OTHER_PRICE','other_price');
         });
     }
 

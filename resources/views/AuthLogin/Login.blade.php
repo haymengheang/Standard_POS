@@ -4,72 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - INV-MGR</title>
-
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f7fb;
-        }
-
-        .login-container {
-            height: 100vh;
-        }
-
-        .login-card {
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: none;
-        }
-
-        .brand {
-            font-weight: 600;
-            color: #ff6b00;
-        }
-
-        .form-control {
-            border-radius: 10px;
-            padding: 12px;
-        }
-
-        .form-control:focus {
-            box-shadow: none;
-            border-color: #ff6b00;
-        }
-
-        .btn-login {
-            background: #ff6b00;
-            color: #fff;
-            border-radius: 10px;
-            padding: 12px;
-        }
-
-        .btn-login:hover {
-            background: #e65c00;
-        }
-
-        .left-panel {
-            background: linear-gradient(135deg, #1f2937, #111827);
-            color: #fff;
-            border-radius: 0 20px 20px 0;
-        }
-
-        .left-panel h2 {
-            font-weight: 600;
-        }
-
-        .icon-box {
-            background: rgba(255,255,255,0.1);
-            padding: 10px;
-            border-radius: 10px;
-            display: inline-block;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset('assets/Auth/Login.css')}}">
 </head>
 <body>
 
@@ -97,32 +36,42 @@
                 <h4 class="mb-3 brand">Welcome Back 👋</h4>
                 <p class="text-muted">Login to your account</p>
 
+                @if(session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
                 @if(session('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}
                     </div>
                 @endif
 
-                {{-- <form method="POST" action="{{ route('login.post') }}"> --}}
-                <form method="POST">
-                    
+                <form method="POST" action="{{ route('login.attempt') }}">
                     @csrf
 
                     <div class="mb-3">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter email">
+                        <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="Enter email" required autofocus>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="Enter password">
+                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter password" required>
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="d-flex justify-content-between mb-3">
                         <div>
-                            <input type="checkbox" name="remember"> Remember
+                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember
                         </div>
-                        <a href="#" class="text-decoration-none">Forgot?</a>
+                        <a href="{{ route('forgot-password') }}" class="text-decoration-none">Forgot?</a>
                     </div>
 
                     <button class="btn btn-login w-100">Login</button>
