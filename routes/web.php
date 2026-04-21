@@ -38,6 +38,6 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/forgot-password', fn() => view('AuthLogin.ForgotPassword'))->name('forgot-password');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
-Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('Send-LinkPassword');
+Route::get('/reset-passwordd/{token}', [ForgotPasswordController::class, 'showResetForm']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);

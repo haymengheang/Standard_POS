@@ -6,28 +6,54 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Models\password_reset_tokens;
 
 
 class ForgotPasswordController extends Controller
 {
+    // public function sendResetLink(Request $request)
+    // {
+    //     $request->validate([
+    //         'email'=> 'required|email|exists:users,email'
+    //     ]);
+    //     $token = Str::random(64);
+    //     DB:table('password_reset_tokens')->updateOrInsert(
+    //         ['email'=> $request->email],
+    //         [
+    //             'token'=> $token,
+    //             'created'=>now()
+    //         ]
+    //     );
+    //     return back()->with('success', 'Reset link: ' . url('/reset-password/'.$token));
+    // }
+
     public function sendResetLink(Request $request)
-    {
-        $request->validate([
-            'email'=> 'required|email|exists:users,email'
-        ]);
-        $token = Str::random(64);
-        DB:table('password_reset_tokens')->updateOrInsert(
-            ['email'=> $request->email],
-            [
-                'token'=> $token,
-                'created'=>now()
-            ]
-        );
-        return back()->with('success', 'Reset link: ' . url('/reset-password/'.$token));
-    }
+{
+    $request->validate([
+        'email' => 'required|email|exists:users,email'
+    ]);
+
+    $token = Str::random(64);
+
+    DB::table('password_reset_tokens')->updateOrInsert(
+        ['email' => $request->email],
+        [
+            'token' => $token,
+            'created_at' => now()
+        ]
+    );
+  return view('AuthLogin.RestPassword');
+    // return back()->with('success', 'Reset link: ' . url('/reset-password/' . $token));
+}
+
+
     public function showResetPassword($token)
     {
        return view('AuthLogin.ForgotPassword', ['token' => $token]);
+    }
+    public function showResetForm()
+    {
+        return view('AuthLogin.RestPassword');
     }
 
 
