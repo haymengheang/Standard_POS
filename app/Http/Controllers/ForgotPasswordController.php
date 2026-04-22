@@ -11,21 +11,6 @@ use App\Models\password_reset_tokens;
 
 class ForgotPasswordController extends Controller
 {
-    // public function sendResetLink(Request $request)
-    // {
-    //     $request->validate([
-    //         'email'=> 'required|email|exists:users,email'
-    //     ]);
-    //     $token = Str::random(64);
-    //     DB:table('password_reset_tokens')->updateOrInsert(
-    //         ['email'=> $request->email],
-    //         [
-    //             'token'=> $token,
-    //             'created'=>now()
-    //         ]
-    //     );
-    //     return back()->with('success', 'Reset link: ' . url('/reset-password/'.$token));
-    // }
 
     public function sendResetLink(Request $request)
 {
@@ -42,10 +27,8 @@ class ForgotPasswordController extends Controller
             'created_at' => now()
         ]
     );
-  return view('AuthLogin.RestPassword');
-    // return back()->with('success', 'Reset link: ' . url('/reset-password/' . $token));
+       return redirect()->route('send-password', ['token' => $token]);
 }
-
 
     public function showResetPassword($token)
     {
@@ -69,7 +52,6 @@ class ForgotPasswordController extends Controller
         ->where('email', $request->email)
         ->where('token', $request->token)
         ->first();
-
     if (!$record) {
         return back()->with('error', 'Invalid token');
     }
