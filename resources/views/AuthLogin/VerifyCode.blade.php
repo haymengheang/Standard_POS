@@ -9,6 +9,12 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/Auth/Login.css')}}">
+    <style>
+        .a{
+            display: flex;
+            justify-content: space-between
+        }
+    </style>
 </head>
 <body>
 
@@ -29,36 +35,23 @@
             </div>
         </div>
 
-        <!-- RIGHT SIDE (Login Form) -->
         <div class="col-md-6 d-flex justify-content-center align-items-center">
             <div class="card login-card p-4 col-md-8">
-
-                <h4 class="mb-3 brand">Find your email</h4>
-                <p class="text-muted">Enter your phone number or recovery email</p>
-
-                {{-- @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                @endif --}}
-
-                @if(session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('Send-LinkPassword') }}">
+                <div class="" style="display: inline-flex;justify-content: space-between;">
+                    <h4 class="mb-3 brand">Verify Code {{ request()->route('code') }}</h4>
+                    <h4 id="timer" class="mb-3 brand "></h4>
+                </div>
+                
+                <form method="POST" action="{{ route('verifycode') }}">
                     @csrf
 
                     <div class="mb-3">
-                        <label>Email</label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter email" required autofocus>
+                        <input type="number" name="CodeOPT" class="form-control @error('verifycode') is-invalid @enderror" placeholder="Enter OPT" required autofocus>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button class="btn btn-login w-100">Next</button>
+                    <button class="btn btn-login w-100">Verify OTP</button>
                 </form>
 
                 <div class="text-center mt-3">
@@ -70,3 +63,15 @@
 </div>
 </body>
 </html>
+<script>
+let time = 60;
+let timer = setInterval(() => {
+    if (time <= 0) {
+        clearInterval(timer);
+        document.getElementById("timer").innerHTML = "You can resend OTP";
+    } else {
+        document.getElementById("timer").innerHTML = time + "s";
+    }
+    time--;
+}, 1000);
+</script>
