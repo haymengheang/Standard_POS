@@ -49,7 +49,9 @@
 
                 <form method="POST" action="{{ route('reset-password') }}">
                     @csrf
-                    <input type="hidden" name="token" value="{{ request()->route('token') }}">
+                    {{-- <input type="hidden" name="token" value="{{ request()->route('token') }}"> --}}
+                    <input type="" name="token" value="{{ request()->route('token') }}">
+
                     <div class="mb-3">
                         <label>Email</label>
                         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter email" required autofocus>

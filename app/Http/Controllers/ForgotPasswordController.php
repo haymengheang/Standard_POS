@@ -31,6 +31,7 @@ class ForgotPasswordController extends Controller
             [
                 'token' => $token,
                 'verifycode'=>$code,
+                'expires_at'=>now()->addMinutes(1),
                 'created_at' => Carbon::now()
             ]
         );
@@ -53,16 +54,19 @@ class ForgotPasswordController extends Controller
         $request->validate([
             'CodeOPT'=> 'required|min:6|'
         ]);
+
         $record = DB::table('password_reset_tokens')
         ->where('verifycode', $request->CodeOPT)
         ->first();
         if (!$record) {
             return back()->with('error', 'Invalid Code OPT');
         }
-        // if (Carbon::parse($record->created_at)->addMinutes(60)->isPast()) {
-        //     return back()->withErrors(['CodeOPT' => 'CodeOPT expired']);
-        // }
-        return view('AuthLogin.RestPassword');
+
+        if (Carbon::parse($record->expires_at)->isPast()){
+            return back()->with('error','expires OTP');
+        }
+        return redirect('/reset-password');
+      
     }
 
     public function resetPassword(Request $request)

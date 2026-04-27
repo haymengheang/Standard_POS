@@ -37,6 +37,14 @@
 
         <div class="col-md-6 d-flex justify-content-center align-items-center">
             <div class="card login-card p-4 col-md-8">
+
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+
                 <div class="" style="display: inline-flex;justify-content: space-between;">
                     <h4 class="mb-3 brand">Verify Code {{ request()->route('code') }}</h4>
                     <h4 id="timer" class="mb-3 brand "></h4>
