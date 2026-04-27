@@ -50,7 +50,7 @@
                 <form method="POST" action="{{ route('reset-password') }}">
                     @csrf
                     {{-- <input type="hidden" name="token" value="{{ request()->route('token') }}"> --}}
-                    <input type="" name="token" value="{{ request()->route('token') }}">
+                    <input type="hidden" name="token" value="{{ request()->route('token') }}">
 
                     <div class="mb-3">
                         <label>Email</label>
@@ -68,10 +68,7 @@
                     </div>
                      <div class="mb-3">
                         <label>Password Confirmation</label>
-                        <input type="password" name="passwordConfirmation" class="form-control @error('password') is-invalid @enderror" placeholder="Enter password" required>
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="password" name="password_confirmation" class="form-control" placeholder="Enter password" required>
                     </div>
                     <button class="btn btn-login w-100">Reset Password</button>
                 </form>

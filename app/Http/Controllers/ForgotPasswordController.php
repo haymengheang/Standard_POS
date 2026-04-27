@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Models\password_reset_tokens;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 
 class ForgotPasswordController extends Controller
@@ -36,7 +37,7 @@ class ForgotPasswordController extends Controller
             ]
         );
         $link = url('/reset-password?token=' . $token . '&email=' . $request->email);
-       
+
         Mail::send('AuthLogin.PageAllowInEmail', ['code' => $code], function ($message) use ($request, $code) {
         $message->to($request->email);
         $message->subject('Your verification code: ' . $code);
@@ -66,20 +67,19 @@ class ForgotPasswordController extends Controller
             return back()->with('error','expires OTP');
         }
         return redirect('/reset-password');
-      
+
     }
 
     public function resetPassword(Request $request)
 {
     $request->validate([
         'email' => 'required|email',
-        'password' => 'required|min:6|confirmed',
-        'token' => 'required'
+        'password' => 'required|min:6|confirmed'
     ]);
 
     $record = DB::table('password_reset_tokens')
         ->where('email', $request->email)
-        ->where('token', $request->token)
+        // ->where('token', $request->token)
         ->first();
     if (!$record) {
         return back()->with('error', 'Invalid token');
