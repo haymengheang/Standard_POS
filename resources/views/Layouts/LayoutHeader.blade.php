@@ -10,8 +10,8 @@ function active($route) {
 @endphp
 <a class="nav-link {{ request()->routeIs('Show.Dasbord') ? 'active' : '' }}" data-purpose="nav-item" href="{{Route('Show.Dasbord')}}"><i class="bi bi-grid-1x2"></i> Dashboard</a>
 <a class="nav-link {{ request()->routeIs('Show.Product') ? 'active' : '' }}" data-purpose="nav-item" href="{{Route('Show.Product')}}"><i class="bi bi-box"></i> Products</a>
-<a class="nav-link {{request()->routeIs('Show.ProductLine') ? 'active' : ''}}" data-purpose="nav-item" href="{{Route('Show.ProductLine')}}"><i class="bi bi-ui-checks-grid"></i> Products Line</a>
-<a class="nav-link" data-purpose="nav-item" href="#"><i class="bi bi-boxes"></i> Unit of Measure</a>
+<a class="nav-link {{ request()->routeIs('Show.ProductLine') ? 'active' : ''}}" data-purpose="nav-item" href="{{Route('Show.ProductLine')}}"><i class="bi bi-ui-checks-grid"></i> Products Line</a>
+<a class="nav-link {{ request()->routeIs('Show.Unitofmeasure') ? 'active' : '' }}" data-purpose="nav-item" href="{{Route('Show.Unitofmeasure')}}"><i class="bi bi-boxes"></i> Unit of Measure</a>
 <a class="nav-link" data-purpose="nav-item" href="#"><i class="bi bi-cart"></i> Orders</a>
 <a class="nav-link" data-purpose="nav-item" href="#"><i class="bi bi-people"></i> Customers</a>
 <a class="nav-link" data-purpose="nav-item" href="#"><i class="bi bi-stack"></i> Inventory</a>

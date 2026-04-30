@@ -4,12 +4,30 @@ namespace App\Http\Controllers;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Models\product_line;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductLineController extends Controller
 {
-    public function ShowProductLine():View
+    public function ShowProductLine(Request $request)
     {
-        $productline = product_line::paginate(6);
+        $query = product_line::query();
+        if ($request->filled('search')){
+            $search = $request->search;
+            $query->where(function ($q) use ($search){
+                $q->where('productlineid', 'like', "%{$search}%")
+                ->orWhere('productlinename', 'like', "%{$search}%")
+                ->orWhere('productlinename2','like', "%{$search}%");
+            });
+        }
+        $productline = $query->paginate(6);
+        if ($request->ajax()){
+            return response()->json([
+                'table' => view('ProductLine.SearchProductLinePartials', compact('productline'))->render(),
+                'pagination' => view('ProductLine.PaginationProductLinePartials', compact('productline'))->render()
+            ]);
+        }
         return view('ProductLine.ShowProductLine',compact('productline'));
     }
     public function ShowProductLineEdit():View
@@ -25,7 +43,7 @@ class ProductLineController extends Controller
             $request->image->move(public_path('uploads'),$imageName);
         }
         product_line::create([
-            'productlineid'=>$request->productsLineid,
+            'productlineid'=>Str::Upper($request->productsLineid),
             'productlinename'=>$request->productsLinename,
             'productlinename2'=>$request->productsLinename2,
             'noted'=>$request->Noted,
@@ -47,7 +65,7 @@ class ProductLineController extends Controller
 
     public function update(Request $request,$id)
     {
-        $productline = product_line::where('productsLineid',$id)->first();
+        $productline = product_line::where('productlineid',$id)->first();
         $imageName = null;
         if($request->hasfile('image')){
             $image = $request->file('image');
@@ -55,7 +73,7 @@ class ProductLineController extends Controller
             $request->image->move(public_path('uploads'),$imageName);
         }
        $productline->update([
-            'productlineid'=>$request->productsLineid,
+            'productlineid'=>Str::Upper($request->productsLineid),
             'productlinename'=>$request->productsLinename,
             'productlinename2'=>$request->productsLinename2,
             'noted'=>$request->Noted,

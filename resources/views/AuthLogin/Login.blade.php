@@ -50,7 +50,7 @@
 
                 <form method="POST" action="{{ route('login.attempt') }}">
                     @csrf
-
+                    
                     <div class="mb-3">
                         <label>Email</label>
                         <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="Enter email" required autofocus>
@@ -89,3 +89,5 @@
 
 </body>
 </html>
+
+

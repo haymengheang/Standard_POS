@@ -1,19 +1,15 @@
-@extends('Main')
-<script>
-    const productUrl = "{{ route('Show.Product') }}";
-</script>
-
+@extends('Main');
 @section('content')
 
 <main class="main-wrapper">
 <!-- Header Section -->
       <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h1 class="h3 fw-bold mb-1">Products</h1>
+                <h1 class="h3 fw-bold mb-1">Unit of Measure</h1>
                 <p class="text-muted mb-0">Manage your catalog and stock levels</p>
             </div>
-            <a href="{{Route('Show.SaveProduct')}}" class="btn btn-orange">
-                <i class="bi bi-plus-lg me-2"></i>Add New Product
+            <a href="{{Route('show.SaveUnitofMeasure')}}" class="btn btn-orange">
+                <i class="bi bi-plus-lg me-2"></i>Add New Unit of Measure
             </a>
       </div>
 <!-- BEGIN: Filters Card -->
@@ -23,17 +19,15 @@
                         <div class="col-lg-4">
                               <div class="input-group">
                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
-                                   <input id="search" name="search" class="form-control bg-light border-start-0" placeholder="Search by ID, name or category..." type="text"/>
+                                   <input class="form-control bg-light border-start-0" name="search" id="search" placeholder="Search by ID, name or category..." type="text"/>
                               </div>
                         </div>
                         <div class="col-md-2">
-                             <select id="category" name='category' class="form-select bg-light border-0" data-purpose="filter-category">
-                                    <option selected="" value="" {{ request('category')=='' ? 'selected' : '' }}>Category</option>
-                                    @foreach ($categories as $cat)
-                                          <option value="{{ $cat->productlineid }}" {{ request('category')==$cat->productlineid ? 'selected' : '' }}>
-                                               {{ $cat->productlineid }}
-                                          </option>
-                                    @endforeach
+                             <select class="form-select bg-light border-0" data-purpose="filter-category">
+                                    <option selected="">Category</option>
+                                    <option>Power Tools</option>
+                                    <option>Hardware</option>
+                                    <option>Safety Gear</option>
                              </select>
                         </div>
                         <div class="col-md-2">
@@ -74,35 +68,29 @@
                   <table class="table table-hover mb-0" id="product-list-table">
                         <thead>
                               <tr>
-                                  <th>Product ID</th>
+                                  <th>Unit of Measure ID</th>
                                   <th>Description</th>
-                                  <th>Specs / Note</th>
-                                  <th>Unit Price</th>
-                                  <th>Other Price</th>
-                                  <th>UOM</th>
-                                  <th>Product Line</th>
-                                  <th>Photo</th>
+                                  <th>Description</th>
+                                  <th>Factor</th>
+                                  <th>Note</th>
                                   <th class="text-center">Action</th>
                               </tr>
                         </thead>
-                        <tbody id="productTable">
-                               @include('Product.SearchPartials', ['products' => $products])
+                        <tbody id="productlineTable">
+                           {{-- @include('ProductLine.SearchProductLinePartials',['productline'=>$productline]); --}}
                         </tbody>
                   </table>
             </div>
             <!-- BEGIN: Pagination -->
-           <div id="paginationArea" class="card-footer bg-white border-top py-3">
-                  <div class="d-flex align-items-center justify-content-between">
-                        <span class="text-muted small">
-                            Showing {{$products->firstItem()}} to {{$products->lastItem()}} of {{$products->total()}} products
-                        </span>
-                        {{ $products->links() }}
-                  </div>
-            </div>
+            {{-- <div  id="paginationArea"  class="card-footer bg-white border-top py-3">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="text-muted small">Showing {{$productline->firstItem()}} to {{$productline->lastItem()}} of {{$productline->total()}} products</span>
+                  {{ $productline->links() }}
+                </div>
+            </div> --}}
             <!-- END: Pagination -->
       </section>
       <!-- END: Products Table -->
+      <script src="{{ asset('assets/JS/Productline.js') }}"></script>
 </main> 
-<script src="{{ asset('assets/JS/CreateIeam.js') }}"></script>
 @endsection
-

@@ -5,19 +5,44 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Icproduct;
+use App\Models\product_line;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function ShowProduct():View
-    {
-      // $products = Icproduct::all();
-      $products =  Icproduct::paginate(6);
-      return view('Product.ShowProduct', compact('products'));
+
+public function ShowProduct(Request $request)
+{
+    $query = Icproduct::query();
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('productid', 'like', "%{$search}%")
+              ->orWhere('productname', 'like', "%{$search}%")
+              ->orWhere('product_line', 'like', "%{$search}%");
+        });
     }
+      if ($request->filled('category')) {
+        $query->where('product_line', $request->category);
+    }
+
+    $products = $query->paginate(6);
+    $categories = product_line::select('productlineid','productlinename')->get();
+
+    if ($request->ajax()) {
+      return response()->json([
+          'table' => view('Product.SearchPartials', compact('products'))->render(),
+          'pagination' => view('Product.PaginationPartials', compact('products'))->render()
+      ]);
+    }
+    return view('Product.ShowProduct', compact('products','categories'));
+}
+
     public function ShowSaveProduct():View
     {
-        return View('Product.SaveProduct');
+      $categories = product_line::select('productlinename', 'productlineid');
+      return View('Product.SaveProduct', compact('categories'));
     }
     public function SaveProduct(Request $request)
     {
@@ -45,7 +70,8 @@ class ProductController extends Controller
     public function edit($id)
     {
       $product = Icproduct::where('productid', $id)->first();
-      return view('Product.SaveProduct', compact('product'));
+      $categories = product_line::select('productlineid', 'productlinename')->get();
+      return view('Product.SaveProduct', compact('product','categories'));
     }
     public function update(Request $request, $id)
     {

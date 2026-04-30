@@ -6,6 +6,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductLineController;
 use App\Http\Controllers\ForgotPasswordController;
+Use App\Http\Controllers\UnitofMeasureController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,24 +25,29 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DasbordController::class, 'ShowDasbord'])->name('Show.Dasbord');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    // =========================Route Product============================
     Route::get('/SaveData', [MainController::class, 'SaveDate'])->name('Save.Information');
     Route::post('/SaveItem', [MainController::class, 'SaveData'])->name('Save.Data');
     Route::get('/ShowProduct', [ProductController::class, 'ShowProduct'])->name('Show.Product');
     Route::get('/ShowSaveProduct', [ProductController::class, 'ShowSaveProduct'])->name('Show.SaveProduct');
     Route::resource('products', ProductController::class);
 
+    // =========================Route Product Line========================
     Route::get('/ShowProductLine', [ProductLineController::class, 'ShowProductLine'])->name('Show.ProductLine');
     Route::get('/ShowProductLineEdit', [ProductLineController::class, 'ShowProductLineEdit'])->name('Show.ProductLineEdit');
     Route::post('/SaveProductLine', [ProductLineController::class, 'SaveProductLine'])->name('Save.ProductLine');
     Route::resource('productsLine', ProductLineController::class);
+
+    // =========================Route UnitofMeasure========================
+    Route::get('/ShowUnitofMeasure',[UnitofMeasureController::class,'ShowUnitofMeasure'])->name('Show.Unitofmeasure');
+    Route::get('/SaveUnitofMeasure',[UnitofMeasureController::class,'ShowPageSaveUnitofMeasure'])->name('show.SaveUnitofMeasure');
+    Route::post('/SaveUnitofMeasure',[UnitofMeasureController::class,'SaveUnitofMeasure'])->name('show.SaveUnitofMeasure');
 });
 
 Route::get('/forgot-password', fn() => view('AuthLogin.ForgotPassword'))->name('forgot-password');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('Send-LinkPassword');
-
 Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('reset-password');
-
 Route::post('/verify-code',[ForgotPasswordController::class, 'verifycode'])->name('verifycode');
 
 

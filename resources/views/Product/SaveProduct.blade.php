@@ -77,10 +77,12 @@
                             <label  class="form-label" for="measure_code">Product Line</label>
                             <select required name="PRODUCT_LINE" class="form-select" id="measure_code">
                                 <option selected="" value="">Select Code</option>
-                                <option value="PCS" @selected(($product->product_line ?? '') == 'PCS')>PCS - Pieces</option>
-                                <option value="KG" @selected(($product->product_line ?? '') == 'KG')>KG - Kilograms</option>
-                                <option value="BOX" @selected(($product->product_line ?? '') == 'BOX')>BOX - Boxes</option>
-                                <option value="SET" @selected(($product->product_line ?? '') == 'SET')>SET - Sets</option>
+                              @foreach ($categories as $cate)
+                                    <option value="{{ $cate->productlineid }}"
+                                        @selected(old('product_line', $product->product_line ?? '') == $cate->productlineid)>
+                                        {{ $cate->productlineid }} - {{ $cate->productlinename }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
