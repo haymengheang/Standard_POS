@@ -51,6 +51,7 @@ class ProductLineController extends Controller
             'disc_percentage'=>$request->discPercentage,
             'picture'=>$imageName,
             'active'=>$request->status,
+            'useradd'=>Auth::user()->name,
             'created_at'=>now()
         ]);
         return redirect()->back()->with('success','Data saved successfully');
@@ -81,6 +82,7 @@ class ProductLineController extends Controller
             'disc_percentage'=>$request->discPercentage,
             'picture'=>$imageName,
             'active'=>$request->status,
+            'useredit'=>Auth::user()->name,
             'updated_at'=>now()
         ]);
        return redirect()->route('Show.ProductLine');

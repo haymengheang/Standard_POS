@@ -8,6 +8,7 @@ use App\Models\Icproduct;
 use App\Models\product_line;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -62,6 +63,7 @@ public function ShowProduct(Request $request)
         'price'=>$request->PRICE,
         'action'=>$request->status,
         'other_price'=>$request->OTHER_PRICE,
+        'useradd'=>Auth::user()->name,
         'created_at'=>now()
       ]);
       return redirect()->back()->with('success', 'Data saved successfully');
@@ -92,6 +94,7 @@ public function ShowProduct(Request $request)
         'price'=>$request->PRICE,
         'action'=>$request->status,
         'other_price'=>$request->OTHER_PRICE,
+        'useredit'=>Auth::user()->name,
         'updated_at'=>now()
       ]);
       return redirect()->route('Show.Product');

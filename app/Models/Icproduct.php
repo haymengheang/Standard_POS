@@ -23,6 +23,8 @@ class Icproduct extends Model
         'product_line',
         'price',
         'other_price',
-        'action'
+        'action',
+        'useradd',
+        'useredit'
     ];
 }

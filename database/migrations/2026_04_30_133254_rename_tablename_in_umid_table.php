@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('umid', function (Blueprint $table) {
-            $table->rename('icum','umid');
+            if(Schema::hasTable('umid')){
+                $table->rename('icum','umid');
+            }
+           
         });
     }
 

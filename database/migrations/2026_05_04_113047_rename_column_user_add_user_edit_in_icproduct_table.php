@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('icproduct', function (Blueprint $table) {
-            // if (!Schema::hasColumn('icproduct','useradd')){
-            //     $table->string('user_add')->nullable();
-            // }
-            // if (!Schema::hasColumn('icproduct','useredit')){
-            //     $table->string('user_edit')->nullable();
-            // }
+             if (Schema::hasColumn('icproduct','user_add')){
+                 $table->renameColumn('user_add','useradd');
+             }
+             if (Schema::hasColumn('icproduct','user_edit')){
+                 $table->renameColumn('user_edit','useredit');
+             }
         });
     }
 

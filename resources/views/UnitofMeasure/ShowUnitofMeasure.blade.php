@@ -76,21 +76,21 @@
                                   <th class="text-center">Action</th>
                               </tr>
                         </thead>
-                        <tbody id="productlineTable">
-                           {{-- @include('ProductLine.SearchProductLinePartials',['productline'=>$productline]); --}}
+                        <tbody id="UnitOfmeasureTable">
+                           @include('UnitofMeasure.SearchUnitOfMeasurePartials',['UnitOfMeasure'=>$UnitOfMeasure])
                         </tbody>
                   </table>
             </div>
             <!-- BEGIN: Pagination -->
-            {{-- <div  id="paginationArea"  class="card-footer bg-white border-top py-3">
+            <div  id="paginationArea"  class="card-footer bg-white border-top py-3">
                 <div class="d-flex align-items-center justify-content-between">
-                  <span class="text-muted small">Showing {{$productline->firstItem()}} to {{$productline->lastItem()}} of {{$productline->total()}} products</span>
-                  {{ $productline->links() }}
+                  <span class="text-muted small">Showing {{$UnitOfMeasure->firstItem()}} to {{$UnitOfMeasure->lastItem()}} of {{$UnitOfMeasure->total()}} products</span>
+                  {{ $UnitOfMeasure->links() }}
                 </div>
-            </div> --}}
+            </div>
             <!-- END: Pagination -->
       </section>
       <!-- END: Products Table -->
-      <script src="{{ asset('assets/JS/Productline.js') }}"></script>
+      <script src="{{ asset('assets/JS/UnitOfMeasure.js') }}"></script>
 </main> 
 @endsection
