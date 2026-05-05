@@ -6,10 +6,10 @@
          <td class="fw-bold">{{$UnitOfMeasures->note}}</td>
          <td class="text-muted">{{$UnitOfMeasures->factor}}</td>
          <td class="text-center">
-          <a href="{{ route('productsLine.edit',$UnitOfMeasures->umid) }}" class="btn btn-sm btn-outline-secondary">
+          <a href="{{ route('unitofMeasure.edit',$UnitOfMeasures->umid) }}" class="btn btn-sm btn-outline-secondary">
               <i class="bi bi-eye"></i> View
           </a>
-          <form action="{{ route('productsLine.destroy',$UnitOfMeasures->umid) }}" method="POST" style="display:inline;">
+          <form action="{{ route('unitofMeasure.destroy',$UnitOfMeasures->umid) }}" method="POST" style="display:inline;">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-sm btn-outline-danger">

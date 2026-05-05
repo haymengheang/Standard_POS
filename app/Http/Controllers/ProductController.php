@@ -42,8 +42,11 @@ public function ShowProduct(Request $request)
 
     public function ShowSaveProduct():View
     {
-      $categories = product_line::select('productlinename', 'productlineid');
-      return View('Product.SaveProduct', compact('categories'));
+    //   $categories = product_line::select('productlinename', 'productlineid');
+     $categories = DB::table('product_line')->get();
+     $unitofmeasure = DB::table('icum')->get();
+
+      return View('Product.SaveProduct', compact('categories','unitofmeasure'));
     }
     public function SaveProduct(Request $request)
     {

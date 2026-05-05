@@ -1,6 +1,6 @@
 @extends('Main')
 <script>
-    const productUrl = "{{ route('Show.Product') }}";
+    const productUrl = "{{ route('show.SaveUnitofMeasure') }}";
 </script>
 
 @section('content')
@@ -102,7 +102,7 @@
             <!-- END: Pagination -->
       </section>
       <!-- END: Products Table -->
-</main> 
+</main>
 <script src="{{ asset('assets/JS/CreateIeam.js') }}"></script>
 @endsection
 

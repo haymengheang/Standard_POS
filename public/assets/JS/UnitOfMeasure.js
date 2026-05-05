@@ -6,7 +6,7 @@ $(document).ready(function () {
         let search = $('#search').val();
 
         $.ajax({
-            url: productUrl,
+            url: UnitofMeasureUrl,
             type: "GET",
             data: { search: search },
             success: function (res) {

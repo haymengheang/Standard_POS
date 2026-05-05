@@ -67,22 +67,26 @@
                             <label class="form-label" for="measure_code">Unit of Measure Code</label>
                             <select value="{{$product->unit_of_measure ?? ''}}" required name="UNIT_OF_MEASURE" class="form-select" id="measure_code">
                                 <option selected="" value="">Select Code</option>
-                                <option value="PCS" @selected(($product->unit_of_measure ?? '') == 'PCS')>PCS - Pieces</option>
-                                <option value="KG" @selected(($product->unit_of_measure ?? '') == 'KG')>KG - Kilograms</option>
-                                <option value="BOX" @selected(($product->unit_of_measure ?? '') == 'BOX')>BOX - Boxes</option>
-                                <option value="SET" @selected(($product->unit_of_measure ?? '') == 'SET')>SET - Sets</option>
+                                @foreach ($unitofmeasure as $unitofmeasures)
+                                  <option value="{{$unitofmeasures->umid}}"
+                                     @selected(old('icum', $unitofmeasures->icum ?? '') == $unitofmeasures->umid)>
+                                        {{ $unitofmeasures->umid }} - {{ $unitofmeasures->umid }}
+                                </option>
+                                @endforeach
+
+
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label  class="form-label" for="measure_code">Product Line</label>
                             <select required name="PRODUCT_LINE" class="form-select" id="measure_code">
                                 <option selected="" value="">Select Code</option>
-                              @foreach ($categories as $cate)
-                                    <option value="{{ $cate->productlineid }}"
-                                        @selected(old('product_line', $product->product_line ?? '') == $cate->productlineid)>
-                                        {{ $cate->productlineid }} - {{ $cate->productlinename }}
-                                    </option>
-                                @endforeach
+                                    @foreach ($categories as $cate)
+                                            <option value="{{ $cate->productlineid }}"
+                                                @selected(old('product_line', $product->product_line ?? '') == $cate->productlineid)>
+                                                {{ $cate->productlineid }} - {{ $cate->productlinename }}
+                                            </option>
+                                        @endforeach
                             </select>
                         </div>
                     </div>
@@ -99,13 +103,13 @@
                         <div class="upload-area" style="padding: 1rem; min-height: 150px; display: flex; align-items: center; justify-content: center; cursor: default;">
                             <div class="position-relative w-100 h-100 d-flex flex-column align-items-center justify-content-center">
                                 @if(!empty($product->image))
-                            
+
                                      <img onclick="document.getElementById('inputfile').click()" id="previewImage" alt="Product Preview" class="img-fluid rounded mb-2" src="{{asset('uploads/'.$product->image)}}" style="max-height: 160px; object-fit: contain;"/>
                                 @else
-                                    
-                         <img onclick="document.getElementById('inputfile').click()" id="previewImage" alt="Product Preview" class="img-fluid rounded mb-2" src="{{asset('icon/no_images.png')}}" style="max-height: 160px; object-fit: contain;"/>
+
+                                      <img onclick="document.getElementById('inputfile').click()" id="previewImage" alt="Product Preview" class="img-fluid rounded mb-2" src="{{asset('icon/no_images.png')}}" style="max-height: 160px; object-fit: contain;"/>
                                 @endif
-                               
+
                                 <div class="d-flex gap-2 mt-2">
                                     <input name="image" id="inputfile"  class="form-control border d-flex align-items-center gap-1 shadow-sm" onchange="PreviewFile(event)" type="file">
                                 </div>

@@ -28,35 +28,28 @@ class UnitofMeasureController extends Controller
     }
     return view('UnitofMeasure.ShowUnitofMeasure', compact('UnitOfMeasure'));
     }
+        public function edit($id)
+    {
+        $UnitOfMeasure = icum::where('umid', $id)->first();
+        return view('UnitofMeasure.SaveUnitofMeasure', compact('UnitOfMeasure'));
+    }
 
-    //     public function ShowProduct(Request $request)
-// {
-//     $query = Icproduct::query();
-//     if ($request->filled('search')) {
-//         $search = $request->search;
-//         $query->where(function ($q) use ($search) {
-//             $q->where('productid', 'like', "%{$search}%")
-//               ->orWhere('productname', 'like', "%{$search}%")
-//               ->orWhere('product_line', 'like', "%{$search}%");
-//         });
-//     }
-//       if ($request->filled('category')) {
-//         $query->where('product_line', $request->category);
-//     }
+     public function update(Request $request, $id)
+    {
 
-//     $products = $query->paginate(6);
-//     $categories = product_line::select('productlineid','productlinename')->get();
-
-//     if ($request->ajax()) {
-//       return response()->json([
-//           'table' => view('Product.SearchPartials', compact('products'))->render(),
-//           'pagination' => view('Product.PaginationPartials', compact('products'))->render()
-//       ]);
-//     }
-//     return view('Product.ShowProduct', compact('products','categories'));
-// }
-
-
+      $UnitOfMeasure = icum::where('umid',$id)->first();
+      $UnitOfMeasure->update([
+        'umid' =>Str::upper($request->umid),
+            'umname'=>$request->umname,
+            'umname2'=>$request->umname2,
+            'factor'=>$request->factor,
+            'note'=>$request->Noted,
+            'active'=>$request->status,
+            'useradd'=>Auth::user()->name,
+            'updated_at	'=>now()
+      ]);
+      return redirect()->route('Show.Unitofmeasure');
+    }
 
     public function ShowPageSaveUnitofMeasure(){
         return view('UnitofMeasure.SaveUnitofMeasure');
@@ -74,6 +67,13 @@ class UnitofMeasureController extends Controller
             'created_at'=>now()
         ]);
         return redirect()->back()->with('success', 'Data saved successfully');
+    }
+
+    public function destroy($id)
+    {
+      $UnitOfMeasure = icum::where('umid',$id)->first();
+      $UnitOfMeasure->delete();
+      return redirect()->route('Show.Unitofmeasure');
     }
 
 

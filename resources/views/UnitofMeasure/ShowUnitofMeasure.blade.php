@@ -1,5 +1,9 @@
 @extends('Main');
 @section('content')
+<script>
+    const UnitofMeasureUrl = "{{ route('Show.Product') }}";
+</script>
+
 
 <main class="main-wrapper">
 <!-- Header Section -->
@@ -21,37 +25,6 @@
                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
                                    <input class="form-control bg-light border-start-0" name="search" id="search" placeholder="Search by ID, name or category..." type="text"/>
                               </div>
-                        </div>
-                        <div class="col-md-2">
-                             <select class="form-select bg-light border-0" data-purpose="filter-category">
-                                    <option selected="">Category</option>
-                                    <option>Power Tools</option>
-                                    <option>Hardware</option>
-                                    <option>Safety Gear</option>
-                             </select>
-                        </div>
-                        <div class="col-md-2">
-                              <select class="form-select bg-light border-0" data-purpose="filter-stock">
-                                    <option selected="">Stock Status</option>
-                                    <option>In Stock</option>
-                                    <option>Low Stock</option>
-                                    <option>Out of Stock</option>
-                              </select>
-                        </div>
-                        <div class="col-md-2">
-                              <select class="form-select bg-light border-0" data-purpose="filter-price">
-                                    <option selected="">Price Range</option>
-                                    <option>$0 - $50</option>
-                                    <option>$50 - $200</option>
-                                    <option>$200+</option>
-                              </select>
-                        </div>
-                        <div class="col-md-2">
-                              <select class="form-select bg-light border-0" data-purpose="filter-supplier">
-                                    <option selected="">Supplier</option>
-                                    <option>Titan Ind.</option>
-                                    <option>Global Tools</option>
-                              </select>
                         </div>
                   </div>
                   <div class="mt-3">
@@ -92,5 +65,5 @@
       </section>
       <!-- END: Products Table -->
       <script src="{{ asset('assets/JS/UnitOfMeasure.js') }}"></script>
-</main> 
+</main>
 @endsection

@@ -8,8 +8,8 @@ class product_line extends Model
 {
     protected $table = "product_line";
     protected $primaryKey = "productlineid";
-    public $incrementing = false;  
-    protected $keyType = 'string';  
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable =[
         'productlineid',
         'productlinename',
@@ -21,5 +21,5 @@ class product_line extends Model
         'active',
         'useradd',
         'useredit'
-    ]; 
+    ];
 }

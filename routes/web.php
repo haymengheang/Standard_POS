@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/ShowUnitofMeasure',[UnitofMeasureController::class,'ShowUnitofMeasure'])->name('Show.Unitofmeasure');
     Route::get('/SaveUnitofMeasure',[UnitofMeasureController::class,'ShowPageSaveUnitofMeasure'])->name('show.SaveUnitofMeasure');
     Route::post('/SaveUnitofMeasure',[UnitofMeasureController::class,'SaveUnitofMeasure'])->name('show.SaveUnitofMeasure');
+    Route::resource('unitofMeasure', UnitofMeasureController::class);
 });
 
 Route::get('/forgot-password', fn() => view('AuthLogin.ForgotPassword'))->name('forgot-password');
@@ -49,15 +50,3 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink
 Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('reset-password');
 Route::post('/verify-code',[ForgotPasswordController::class, 'verifycode'])->name('verifycode');
-
-
-// Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm']);
-// Route::post('/reset-password/{token}', function ($token) {
-//     return view('AuthLogin.RestPassword', [
-//         'token' => $token
-//     ]);
-// })->name('send-password');
-// // Route::get('/reset-password/{token}', function ($token) {
-// //     return view('auth.reset-password', ['token' => $token]);
-// // });
-// Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('reset-password');
