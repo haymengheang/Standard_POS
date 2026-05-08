@@ -7,6 +7,50 @@
         }
         reader.readAsDataURL(event.target.files[0]);
     }
+
+    // document.getElementById('exportOption').addEventListener('change',function (){
+    //     if(this.value){
+    //         window.location.href = this.value;
+    //     }
+    // });
+
+
+    document.getElementById('exportOption').addEventListener('change', function () {
+
+    // EXPORT PDF OR EXCEL
+    if(this.value === 'pdf' || this.value === 'excel')
+    {
+        window.location.href = this.options[this.selectedIndex].dataset.url;
+    }
+
+    // OPEN MODAL
+    if(this.value === 'upload')
+    {
+        let myModal = new bootstrap.Modal(
+            document.getElementById('uploadExcelModal')
+        );
+
+        myModal.show();
+    }
+
+    // RESET SELECT
+    this.value = '';
+
+});
+
+document.querySelector('.upload-excel-btn')
+.addEventListener('click', function (e) {
+
+    e.preventDefault();
+
+    let myModal = new bootstrap.Modal(
+        document.getElementById('uploadExcelModal')
+    );
+
+    myModal.show();
+
+});
+
 $(document).ready(function () {
 
     let timer;

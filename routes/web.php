@@ -10,6 +10,7 @@ Use App\Http\Controllers\UnitofMeasureController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return Auth::check()
         ? redirect()->route('Show.Dasbord')
@@ -43,6 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/SaveUnitofMeasure',[UnitofMeasureController::class,'ShowPageSaveUnitofMeasure'])->name('show.SaveUnitofMeasure');
     Route::post('/SaveUnitofMeasure',[UnitofMeasureController::class,'SaveUnitofMeasure'])->name('show.SaveUnitofMeasure');
     Route::resource('unitofMeasure', UnitofMeasureController::class);
+
+
+    Route::get('/Export-Excel',[ProductController::class,'ExportExcel'])->name('Product.ImportExcel');
+    Route::get('Export-PDF',[ProductController::class,'ExportPDF'])->name('Product.ExportPDF');
+
+    Route::post('/Product/import',[ProductController::class,'ImportExit'])->name('product.import');
 });
 
 Route::get('/forgot-password', fn() => view('AuthLogin.ForgotPassword'))->name('forgot-password');

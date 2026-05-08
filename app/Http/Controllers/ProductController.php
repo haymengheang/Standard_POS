@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Icproduct;
@@ -9,12 +8,15 @@ use App\Models\product_line;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Imports\ProductImport;
 class ProductController extends Controller
 {
-
-public function ShowProduct(Request $request)
-{
+// =================== Show Product And Search =================
+  public function ShowProduct(Request $request)
+  {
     $query = Icproduct::query();
     if ($request->filled('search')) {
         $search = $request->search;
@@ -27,10 +29,8 @@ public function ShowProduct(Request $request)
       if ($request->filled('category')) {
         $query->where('product_line', $request->category);
     }
-
     $products = $query->paginate(6);
     $categories = product_line::select('productlineid','productlinename')->get();
-
     if ($request->ajax()) {
       return response()->json([
           'table' => view('Product.SearchPartials', compact('products'))->render(),
@@ -38,14 +38,13 @@ public function ShowProduct(Request $request)
       ]);
     }
     return view('Product.ShowProduct', compact('products','categories'));
-}
+  }
 
-    public function ShowSaveProduct():View
-    {
-    //   $categories = product_line::select('productlinename', 'productlineid');
+//=====================Save Product================================
+  public function ShowSaveProduct():View
+  {
      $categories = DB::table('product_line')->get();
      $unitofmeasure = DB::table('icum')->get();
-
       return View('Product.SaveProduct', compact('categories','unitofmeasure'));
     }
     public function SaveProduct(Request $request)
@@ -71,7 +70,7 @@ public function ShowProduct(Request $request)
       ]);
       return redirect()->back()->with('success', 'Data saved successfully');
     }
-
+//======================Edit Product===============================
     public function edit($id)
     {
       $product = Icproduct::where('productid', $id)->first();
@@ -102,6 +101,7 @@ public function ShowProduct(Request $request)
       ]);
       return redirect()->route('Show.Product');
     }
+//=========================Delete Product==========================
     public function destroy($id)
     {
       $product = Icproduct::where('productid',$id)->first();
@@ -111,5 +111,27 @@ public function ShowProduct(Request $request)
       $product->delete();
       return redirect()->route('Show.Product');
     }
+
+//=========================Export Product To Excel===================
+    public function ExportExcel()
+    {
+      return Excel::download(new ProductExport, 'products.xlsx');
+    }
+
+//=========================Export Product To PDF===================
+    public function ExportPDF(){
+      $products = Icproduct::all();
+      $pdf = pdf::loadView('Product.PDF.ExportProductPDF',compact('products'))->setPaper('a4','portrait');
+      return $pdf->download('products.pdf');
+    }
+//==========================Import Product By Excel ================
+public function ImportExit(Request $request){
+    $request->validate([
+    'file'=>'required|mimes:xlsx,xls,csv'
+  ]);
+  Excel::import(new ProductImport, $request->file('file'));
+
+  return back()->with('success','Import Successfully');
+}
 
 }
