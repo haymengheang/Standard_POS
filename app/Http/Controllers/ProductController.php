@@ -73,7 +73,7 @@ class ProductController extends Controller
 //======================Edit Product===============================
     public function edit($id)
     {
-      $product = Icproduct::where('productid', $id)->first();
+      $product = Icproduct::where('productid','=', $id)->first();
       $categories = product_line::select('productlineid', 'productlinename')->get();
       return view('Product.SaveProduct', compact('product','categories'));
     }
@@ -100,7 +100,9 @@ class ProductController extends Controller
         'updated_at'=>now()
       ]);
       return redirect()->route('Show.Product');
+
     }
+
 //=========================Delete Product==========================
     public function destroy($id)
     {
@@ -125,13 +127,13 @@ class ProductController extends Controller
       return $pdf->download('products.pdf');
     }
 //==========================Import Product By Excel ================
-public function ImportExit(Request $request){
-    $request->validate([
-    'file'=>'required|mimes:xlsx,xls,csv'
-  ]);
-  Excel::import(new ProductImport, $request->file('file'));
+    public function ImportExit(Request $request){
+        $request->validate([
+        'file'=>'required|mimes:xlsx,xls,csv'
+    ]);
+    Excel::import(new ProductImport, $request->file('file'));
 
-  return back()->with('success','Import Successfully');
-}
+    return back()->with('success','Import Successfully');
+    }
 
 }

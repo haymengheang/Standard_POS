@@ -20,9 +20,15 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
+
+    // =========================Information Profile========================
+
 });
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/Profile-User',[AuthController::class, 'InformationProfile'])->name('Information.Profile');
+
     Route::get('/dashboard', [DasbordController::class, 'ShowDasbord'])->name('Show.Dasbord');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -46,9 +52,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('unitofMeasure', UnitofMeasureController::class);
 
 
+
+
+
     Route::get('/Export-Excel',[ProductController::class,'ExportExcel'])->name('Product.ImportExcel');
     Route::get('Export-PDF',[ProductController::class,'ExportPDF'])->name('Product.ExportPDF');
-
     Route::post('/Product/import',[ProductController::class,'ImportExit'])->name('product.import');
 });
 

@@ -45,4 +45,9 @@ class AuthController extends Controller
 
         return redirect()->route('login')->with('status', 'You have been logged out.');
     }
+
+    // =======================Information Profile=======================
+    public function InformationProfile(){
+        return view('AuthLogin.InformationProfile');
+    }
 }
