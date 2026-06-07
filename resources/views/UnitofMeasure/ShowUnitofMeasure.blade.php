@@ -1,7 +1,7 @@
 @extends('Main');
 @section('content')
 <script>
-    const UnitofMeasureUrl = "{{ route('Show.Product') }}";
+    const UnitofMeasureUrl = "{{ route('Show.Unitofmeasure') }}";
 </script>
 
 

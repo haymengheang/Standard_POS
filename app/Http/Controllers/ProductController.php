@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Icproduct;
 use App\Models\product_line;
+use App\Models\icum;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -75,13 +76,14 @@ class ProductController extends Controller
     {
       $product = Icproduct::where('productid','=', $id)->first();
       $categories = product_line::select('productlineid', 'productlinename')->get();
-      return view('Product.SaveProduct', compact('product','categories'));
+      $unitofmeasure = icum::select('umid','umname')->get();
+      return view('Product.SaveProduct', compact('product','categories','unitofmeasure'));
     }
     public function update(Request $request, $id)
     {
 
       $product = Icproduct::where('productid',$id)->first();
-      $imageName = null;
+      $imageName = $product->image;
       if ($request->hasFile('image')){
         $image = $request->file('image');
         $imageName = $request->PRODUCTID.'_'.time().'.'.$image->getClientOriginalExtension();

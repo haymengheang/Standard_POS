@@ -67,7 +67,7 @@ class ProductLineController extends Controller
     public function update(Request $request,$id)
     {
         $productline = product_line::where('productlineid',$id)->first();
-        $imageName = null;
+        $imageName = $productline->picture;
         if($request->hasfile('image')){
             $image = $request->file('image');
             $imageName = $request->productsLineid.'_'.time().'.'.$image->getClientOriginalExtension();
