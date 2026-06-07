@@ -57,7 +57,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <i class="fa fa-download me-2"></i>
-                Action 
+                Action
             </button>
             <ul class="dropdown-menu">
                   <li>
@@ -188,16 +188,43 @@
                                     <h5>Note</h5>
                                     Please select Excel file to upload.
                               </div>
+                              @if(session('error'))
+                              <div class="alert alert-danger alert-dismissible fade show">
+                                    {!! nl2br(e(session('error'))) !!}
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="alert">
+                                    </button>
+                              </div>
+                              @endif
+                              @if($errors->has('file'))
+                              <div class="alert alert-danger alert-dismissible fade show">
+                                    {{ $errors->first('file') }}
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="alert">
+                                    </button>
+                              </div>
+                              @endif
                               <!-- FILE -->
                               <div class="mb-3">
                                     <label class="form-label"> Select File </label>
                                     <input type="file" name="file" class="form-control">
                               </div>
                               <!-- WARNING -->
-                              <div class="alert alert-warning">
+                              {{-- <div class="alert alert-warning">
                                     <h5>Warning</h5>
                                     Existing product IDs may be updated.
-                              </div>
+                              </div> --}}
+                               @if(session('success'))
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    {{ session('success') }}
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="alert">
+                                    </button>
+                                </div>
+                                @endif
                         </div>
                         <div class="modal-footer">
                               <button type="button" class="btn btn-danger px-4 py-2" data-bs-dismiss="modal">
@@ -212,7 +239,18 @@
             </div>
             </div>
       <!-- End Models -->
+
 </main>
+@if(session('error') || session('success') || $errors->has('file'))
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let uploadModal = new bootstrap.Modal(
+        document.getElementById('uploadExcelModal')
+    );
+
+    uploadModal.show();
+});
+</script>
+@endif
 <script src="{{ asset('assets/JS/CreateIeam.js') }}"></script>
 @endsection
-

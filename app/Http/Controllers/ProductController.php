@@ -12,6 +12,7 @@ use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Imports\ProductImport;
+use Maatwebsite\Excel\Validators\ValidationException;
 class ProductController extends Controller
 {
 // =================== Show Product And Search =================
@@ -125,13 +126,50 @@ class ProductController extends Controller
       return $pdf->download('products.pdf');
     }
 //==========================Import Product By Excel ================
-public function ImportExit(Request $request){
-    $request->validate([
-    'file'=>'required|mimes:xlsx,xls,csv'
-  ]);
-  Excel::import(new ProductImport, $request->file('file'));
+// public function ImportExit(Request $request){
+//     $request->validate([
+//     'file'=>'required|mimes:xlsx,xls,csv'
+//   ]);
+//   Excel::import(new ProductImport, $request->file('file'));
 
-  return back()->with('success','Import Successfully');
+//   return back()->with('success','Import Successfully');
+// }
+
+public function ImportExit(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv'
+    ]);
+
+    try {
+
+        Excel::import(
+            new ProductImport,
+            $request->file('file')
+        );
+
+        return back()->with(
+            'success',
+            'Import Successfully'
+        );
+
+    } catch (ValidationException $e) {
+
+        $failures = $e->failures();
+
+        $errorMessages = [];
+
+        foreach ($failures as $failure) {
+
+            $errorMessages[] =
+                'Row '.$failure->row().' : '.
+                implode(', ', $failure->errors());
+        }
+        return back()->with(
+            'error',
+            implode("\n", $errorMessages)
+        );
+    }
 }
 
 }
