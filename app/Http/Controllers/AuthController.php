@@ -30,10 +30,45 @@ class AuthController extends Controller
                     'email' => 'The provided credentials do not match our records.',
                 ]);
         }
+         $user = Auth::user();
 
-        $request->session()->regenerate();
+        if (
+            $user->password_expire_at &&
+            now()->gte($user->password_expire_at)
+        ) {
+            return redirect()
+                ->route('Change.Password')
+                ->with('warning', 'Password expired. Please change your password.');
+        }
 
-        return redirect()->intended(route('Show.Dasbord'));
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('Show.Dasbord'));
+        }
+
+    public function ChangePassword(){
+        return view('AuthLogin.ChangePassword');
+    }
+
+    public function UpdatePassword(Request $request){
+        $request->validate([
+            'current_password' => ['required', 'string'],
+            'password' => ['required', 'string', 'confirmed'],
+        ]);
+
+        $user = Auth::user();
+
+        if (! Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'The provided password does not match our records.']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password),
+            'changed_at' => now(),
+            'password_expire_at' => now()->addDays(90),
+        ]);
+
+        return redirect()->route('Show.Dasbord')->with('status', 'Password updated successfully.');
     }
 
     public function logout(Request $request): RedirectResponse
@@ -44,5 +79,14 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login')->with('status', 'You have been logged out.');
+    }
+
+    // =======================Information Profile=======================
+    public function InformationProfile(){
+        return view('AuthLogin.InformationProfile');
+    }
+    // =======================Edit Profile=======================
+    public function EditProfile(){
+        return view('AuthLogin.EditProfile');
     }
 }

@@ -9,6 +9,9 @@
       --text-main: #334155;
       --text-muted: #64748b;
       --border-color: #e2e8f0;
+      --color-success: #27a844;
+      --color-danger: #dc3546;
+      --color-waning:#fec107;
     }
 
     body {
@@ -16,6 +19,10 @@
       background-color: var(--main-bg);
       color: var(--text-main);
       overflow-x: hidden;
+    }
+
+    html[lang="km"] body {
+      font-family: 'Noto Sans Khmer', 'Khmer OS', 'Khmer OS System', sans-serif;
     }
   </style>
 <style data-purpose="sidebar-navigation">

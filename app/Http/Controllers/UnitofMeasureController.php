@@ -23,7 +23,7 @@ class UnitofMeasureController extends Controller
          if ($request->ajax()) {
           return response()->json([
           'table' => view('UnitofMeasure.SearchUnitOfMeasurePartials', compact('UnitOfMeasure'))->render(),
-          'pagination' => view('Product.PaginationPartials', compact('UnitOfMeasure'))->render()
+          'pagination' => view('UnitofMeasure.PaginationUnitofMeasurePartials', compact('UnitOfMeasure'))->render()
       ]);
     }
     return view('UnitofMeasure.ShowUnitofMeasure', compact('UnitOfMeasure'));

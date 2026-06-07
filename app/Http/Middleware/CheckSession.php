@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+
+
 class CheckSession
 {
     /**
@@ -15,9 +17,10 @@ class CheckSession
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!session()>has('user_id')){
-             return view('AuthLogin.Login');
+        if (!session()->has('user_id')){
+              return response()->view('AuthLogin.Login');
         }
+        
         return $next($request);
     }
 }

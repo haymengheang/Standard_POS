@@ -1,41 +1,20 @@
 @extends('Main')
 <script>
-    const productUrl = "{{ route('show.SaveUnitofMeasure') }}";
+    const productUrl = "{{ route('Show.Product') }}";
 </script>
+
 
 @section('content')
 
 <main class="main-wrapper">
-<!-- Header Section -->
-      {{-- <div class="d-flex justify-content-between align-items-end mb-4">
-            <div>
-                <h1 class="h3 fw-bold mb-1">Products</h1>
-                <p class="text-muted mb-0">Manage your catalog and stock levels</p>
-            </div>
-            <a href="{{Route('Show.SaveProduct')}}" class="btn btn-orange">
-                <i class="bi bi-plus-lg me-2"></i>Add New Product
-            </a>
-
-            <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-            </div>
-</div> --}}
-
 
 <div class="d-flex justify-content-between align-items-end mb-4">
 
     <!-- LEFT -->
     <div>
-        <h1 class="h3 fw-bold mb-1">Products</h1>
+        <h1 class="h3 fw-bold mb-1">{{ __('messages.products') }}</h1>
         <p class="text-muted mb-0">
-            Manage your catalog and stock levels
+        {{ __('messages.manage_catalog_stock') }}
         </p>
     </div>
 
@@ -46,12 +25,12 @@
            class="btn btn-orange">
 
             <i class="bi bi-plus-lg me-2"></i>
-            Add New Product
+            {{ __('messages.add_new_product') }}
 
         </a>
         <!-- DROPDOWN -->
         <div class="dropdown">
-            <button class="btn dropdown-toggle px-4 py-2" style="background-color: #fe6b02; color:white"
+            <button class="btn dropdown-toggle px-4 py-2" style="background-color: var(--primary-orange); color:white"
                     type="button"
                     id="dropdownMenuButton"
                     data-bs-toggle="dropdown"
@@ -62,17 +41,17 @@
             <ul class="dropdown-menu">
                   <li>
                     <a class="dropdown-item upload-excel-btn" href="#">
-                      <i class="fa-solid fa-upload me-2" style="color: rgb(90, 89, 89);"></i>  Upload Excel
+                      <i class="fa-solid fa-upload me-2" style="color: var(--text-main);"></i>  {{ __('messages.upload_excel') }}
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item" href="{{ route('Product.ImportExcel') }}">
-                     <i class="fa-solid fa-file-excel fa-lg me-2" style="color: rgb(81, 198, 118);"></i> Export Excel
+                     <i class="fa-solid fa-file-excel fa-lg me-2" style="color: var(--color-success);"></i> {{ __('messages.export_excel') }}
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item" href="{{ route('Product.ExportPDF') }}">
-                       <i class="fa-solid fa-file-pdf fa-lg me-2" style="color: rgb(234, 87, 87);"></i> Export PDF
+                       <i class="fa-solid fa-file-pdf fa-lg me-2" style="color: var(--color-danger);"></i> {{ __('messages.export_pdf') }}
                     </a>
                 </li>
             </ul>
@@ -87,12 +66,12 @@
                         <div class="col-lg-4">
                               <div class="input-group">
                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
-                                   <input id="search" name="search" class="form-control bg-light border-start-0" placeholder="Search by ID, name or category..." type="text"/>
+                                   <input id="search" name="search" class="form-control bg-light border-start-0" placeholder="{{ __('messages.search_by_id_or_category') }}" type="text"/>
                               </div>
                         </div>
                         <div class="col-md-2">
                              <select id="category" name='category' class="form-select bg-light border-0" data-purpose="filter-category">
-                                    <option selected="" value="" {{ request('category')=='' ? 'selected' : '' }}>Category</option>
+                                    <option selected="" value="" {{ request('category')=='' ? 'selected' : '' }}>{{ __('messages.category') }}</option>
                                     @foreach ($categories as $cat)
                                           <option value="{{ $cat->productlineid }}" {{ request('category')==$cat->productlineid ? 'selected' : '' }}>
                                                {{ $cat->productlineid }}
@@ -102,7 +81,7 @@
                         </div>
                         <div class="col-md-2">
                               <select class="form-select bg-light border-0" data-purpose="filter-price">
-                                    <option selected="">Price Range</option>
+                                    <option selected="">{{ __('messages.price_range') }}</option>
                                     <option>$0 - $50</option>
                                     <option>$50 - $200</option>
                                     <option>$200+</option>
@@ -110,24 +89,24 @@
                         </div>
                         <div class="col-md-2">
                               <select class="form-select bg-light border-0" data-purpose="filter-price">
-                                    <option selected="">Price Range</option>
+                                    <option selected="">{{ __('messages.price_range') }}</option>
                                     <option>$0 - $50</option>
                                     <option>$50 - $200</option>
                                     <option>$200+</option>
                               </select>
                         </div>
-                              <div class="col-md-2">
+                              {{-- <div class="col-md-2">
                               <select class="form-select bg-light border-0" id="exportOption" data-purpose="filter-stock">
                                     <option selected="" class="bi bi-search">Action Download</i></option>
                                    <option value="{{ route('Product.ImportExcel') }}">Export Excel </option>
                                     <option value='upload'>Upload Excel</option>
                                     <option value="{{ route('Product.ExportPDF') }}">Download PDF</option>
                               </select>
-                        </div>
+                        </div> --}}
                   </div>
                   <div class="mt-3">
                   <a class="text-decoration-none small text-muted hover-primary" href="#" id="clear-filters">
-                  <i class="bi bi-x-circle me-1"></i>Clear all filters
+                  <i class="bi bi-x-circle me-1"></i>{{ __('messages.clear_all_filters') }}
                             </a>
                   </div>
             </div>
@@ -136,18 +115,18 @@
       <!-- BEGIN: Products Table -->
       <section class="card overflow-hidden">
             <div class="table-responsive">
-                  <table class="table table-hover mb-0" id="product-list-table">
+                  <table class="table table-hover mb-0 " id="product-list-table">
                         <thead>
-                              <tr>
-                                  <th>Product ID</th>
-                                  <th>Description</th>
-                                  <th>Specs / Note</th>
-                                  <th>Unit Price</th>
-                                  <th>Other Price</th>
-                                  <th>UOM</th>
-                                  <th>Product Line</th>
-                                  <th>Photo</th>
-                                  <th class="text-center">Action</th>
+                              <tr  >
+                                  <th>{{ __('messages.product_id') }}</th>
+                                  <th>{{ __('messages.description') }}</th>
+                                  <th>{{ __('messages.spece_note') }}</th>
+                                  <th>{{ __('messages.unit_price') }}</th>
+                                  <th>{{ __('messages.other_price') }}</th>
+                                  <th>{{ __('messages.uom') }}</th>
+                                  <th>{{ __('messages.product_line') }}</th>
+                                  <th>{{ __('messages.photo') }}</th>
+                                  <th class="text-center">{{ __('messages.action') }}</th>
                               </tr>
                         </thead>
                         <tbody id="productTable">
@@ -159,7 +138,7 @@
            <div id="paginationArea" class="card-footer bg-white border-top py-3">
                   <div class="d-flex align-items-center justify-content-between">
                         <span class="text-muted small">
-                            Showing {{$products->firstItem()}} to {{$products->lastItem()}} of {{$products->total()}} products
+                            {{ __('messages.showwing') }} {{$products->firstItem()}} {{ __('messages.to') }} {{$products->lastItem()}} {{ __('messages.of') }} {{$products->total()}} {{ __('messages.products') }}
                         </span>
                         {{ $products->links() }}
                   </div>
@@ -174,9 +153,9 @@
             tabindex="-1">
             <div class="modal-dialog modal-lg">
                   <div class="modal-content">
-                        <div style="background-color: #fe6b02" class="modal-header  text-white">
+                        <div style="background-color: var(--primary-orange)" class="modal-header  text-white">
                               <h5 class="modal-title">
-                                    Upload Excel File
+                                    {{ __('messages.upload_excel') }}
                               </h5>
                               <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
@@ -230,7 +209,7 @@
                               <button type="button" class="btn btn-danger px-4 py-2" data-bs-dismiss="modal">
                                     Close
                               </button>
-                              <button type="submit" style="background-color: #fe6b02" class="btn px-4 py-2 text-white">
+                              <button type="submit" style="background-color: var(--primary-orange)" class="btn px-4 py-2 text-white">
                                     Upload Excel
                               </button>
                         </div>

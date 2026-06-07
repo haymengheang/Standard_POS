@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Icproduct;
 use App\Models\product_line;
+use App\Models\icum;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -74,15 +75,16 @@ class ProductController extends Controller
 //======================Edit Product===============================
     public function edit($id)
     {
-      $product = Icproduct::where('productid', $id)->first();
+      $product = Icproduct::where('productid','=', $id)->first();
       $categories = product_line::select('productlineid', 'productlinename')->get();
-      return view('Product.SaveProduct', compact('product','categories'));
+      $unitofmeasure = icum::select('umid','umname')->get();
+      return view('Product.SaveProduct', compact('product','categories','unitofmeasure'));
     }
     public function update(Request $request, $id)
     {
 
       $product = Icproduct::where('productid',$id)->first();
-      $imageName = null;
+      $imageName = $product->image;
       if ($request->hasFile('image')){
         $image = $request->file('image');
         $imageName = $request->PRODUCTID.'_'.time().'.'.$image->getClientOriginalExtension();
@@ -101,7 +103,9 @@ class ProductController extends Controller
         'updated_at'=>now()
       ]);
       return redirect()->route('Show.Product');
+
     }
+
 //=========================Delete Product==========================
     public function destroy($id)
     {
@@ -126,50 +130,13 @@ class ProductController extends Controller
       return $pdf->download('products.pdf');
     }
 //==========================Import Product By Excel ================
-// public function ImportExit(Request $request){
-//     $request->validate([
-//     'file'=>'required|mimes:xlsx,xls,csv'
-//   ]);
-//   Excel::import(new ProductImport, $request->file('file'));
-
-//   return back()->with('success','Import Successfully');
-// }
-
-public function ImportExit(Request $request)
-{
+public function ImportExit(Request $request){
     $request->validate([
-        'file' => 'required|mimes:xlsx,xls,csv'
-    ]);
+    'file'=>'required|mimes:xlsx,xls,csv'
+  ]);
+  Excel::import(new ProductImport, $request->file('file'));
 
-    try {
-
-        Excel::import(
-            new ProductImport,
-            $request->file('file')
-        );
-
-        return back()->with(
-            'success',
-            'Import Successfully'
-        );
-
-    } catch (ValidationException $e) {
-
-        $failures = $e->failures();
-
-        $errorMessages = [];
-
-        foreach ($failures as $failure) {
-
-            $errorMessages[] =
-                'Row '.$failure->row().' : '.
-                implode(', ', $failure->errors());
-        }
-        return back()->with(
-            'error',
-            implode("\n", $errorMessages)
-        );
-    }
+  return back()->with('success','Import Successfully');
 }
 
 }

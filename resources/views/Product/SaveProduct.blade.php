@@ -7,18 +7,18 @@
         <header class="row align-items-end mb-4 g-3">
                 <div class="col">
                     <div>
-                     <h1 class="h3 fw-bold mb-1">Products</h1>
-                     <p class="text-muted mb-0">Manage your catalog and stock levels</p>
+                     <h1 class="h3 fw-bold mb-1">{{__('messages.products')}}</h1>
+                     <p class="text-muted mb-0">{{__('messages.manage_catalog_stock')}}</p>
                     </div>
                 </div>
                 <div class="col-auto">
                     <div class="d-flex gap-2">
                         <a href="{{Route('Show.Product')}}">
-                            <button class="btn btn-outline-dark" style="height: 45px;">Cancel</button>
+                            <button class="btn btn-outline-dark" style="height: 45px;">{{ __('messages.cancel') }}</button>
                         </a>
                         <button form="FormProduct" type="submit" class="btn btn-orange d-flex align-items-center gap-2">
                         <span class="material-icons-round" style="font-size: 1.1rem;">save</span>
-                            Save Item
+                           {{ __('messages.save_item') }}
                         </button>
                     </div>
                 </div>
@@ -35,58 +35,56 @@
                 <div class="card">
                     <div class="row g-8 " >
                         <div class="col-12">
-                            <label class="form-label" for="product_id">Product ID</label>
+                            <label class="form-label" for="product_id">{{ __('messages.product_id') }}</label>
                             <div class="input-group-custom">
                                 <span class="material-icons-round">qr_code</span>
-                                <input required value="{{$product->productid ?? ''}}"  name="PRODUCTID" style="text-transform: uppercase;" class="form-control" id="product_id" placeholder="e.g. SKU-10293" type="text"/>
+                                <input required value="{{$product->productid ?? ''}}"  name="PRODUCTID" style="text-transform: uppercase;" class="form-control" id="product_id" placeholder="{{ __('messages.eg.sku') }}" type="text"/>
                             </div>
                         </div>
                         <div class="col-12">
-                            <label class="form-label" for="description">Description</label>
-                            <input class="form-control" value="{{$product->productname ?? ''}}" name="PRODUCTNAME" id="description" placeholder="Main item description" type="text"/>
+                            <label class="form-label" for="description">{{ __('messages.description') }}</label>
+                            <input class="form-control" value="{{$product->productname ?? ''}}" name="PRODUCTNAME" id="description" placeholder="{{ __('messages.main_item_description') }}" type="text"/>
                         </div>
                         <div class="col-12">
-                            <label class="form-label" for="description2">Additional Description</label>
-                            <textarea class="form-control" name="PRODUCTNAME2" id="description2" placeholder="Specs, materials, or technical details..." rows="8">{{$product->productname2 ?? ''}}</textarea>
+                            <label class="form-label" for="description2">{{ __('messages.additional_description') }}</label>
+                            <textarea class="form-control" name="PRODUCTNAME2" id="description2" placeholder="{{ __('messages.specs_materials') }}" rows="8">{{$product->productname2 ?? ''}}</textarea>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label" for="price" >Unit Price</label>
+                            <label class="form-label" for="price" >{{ __('messages.unit_price') }}</label>
                             <div  class="input-group-custom price-input">
                                 <span class="currency-symbol">$</span>
                                 <input required class="form-control" value="{{$product->price ?? ''}}" name="PRICE" id="price" placeholder="0.00" step="0.01" type="number"/>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label" for="price">Wholse Price</label>
+                            <label class="form-label" for="price">{{ __('messages.other_price') }}</label>
                             <div class="input-group-custom price-input">
                                 <span class="currency-symbol">$</span>
                                 <input required class="form-control" value="{{$product->other_price ?? ''}}" name="OTHER_PRICE" id="price" placeholder="0.00" step="0.01" type="number"/>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label" for="measure_code">Unit of Measure Code</label>
-                            <select value="{{$product->unit_of_measure ?? ''}}" required name="UNIT_OF_MEASURE" class="form-select" id="measure_code">
-                                <option selected="" value="">Select Code</option>
+                            <label class="form-label" for="measure_code">{{ __('messages.unit_of_measure') }}</label>
+                            <select  required name="UNIT_OF_MEASURE" class="form-select" id="measure_code">
+                                <option selected="" value="">{{ __('messages.select_code') }}</option>
                                 @foreach ($unitofmeasure as $unitofmeasures)
                                   <option value="{{$unitofmeasures->umid}}"
-                                     @selected(old('icum', $unitofmeasures->icum ?? '') == $unitofmeasures->umid)>
-                                        {{ $unitofmeasures->umid }} - {{ $unitofmeasures->umid }}
+                                     @selected(old('icum', $product->unit_of_measure ?? '') == $unitofmeasures->umid)>
+                                        {{ $unitofmeasures->umid }} - {{ $unitofmeasures->umname }}
                                 </option>
                                 @endforeach
-
-
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label  class="form-label" for="measure_code">Product Line</label>
+                            <label  class="form-label" for="measure_code">{{ __('messages.product_line') }}</label>
                             <select required name="PRODUCT_LINE" class="form-select" id="measure_code">
-                                <option selected="" value="">Select Code</option>
+                                <option selected="" value="">{{ __('messages.select_code') }}</option>
                                     @foreach ($categories as $cate)
                                             <option value="{{ $cate->productlineid }}"
                                                 @selected(old('product_line', $product->product_line ?? '') == $cate->productlineid)>
                                                 {{ $cate->productlineid }} - {{ $cate->productlinename }}
                                             </option>
-                                        @endforeach
+                                    @endforeach
                             </select>
                         </div>
                     </div>
@@ -97,7 +95,7 @@
         <!-- Image Upload Card -->
                 <div class="card mb-4">
                     <div class="mb-3">
-                        <label class="form-label d-block mb-1">Product Photo</label>
+                        <label class="form-label d-block mb-1">{{ __('messages.product_photo') }}</label>
                         <span class="text-secondary small">PNG, JPG, or WEBP. Max 5MB.</span>
                     </div>
                         <div class="upload-area" style="padding: 1rem; min-height: 150px; display: flex; align-items: center; justify-content: center; cursor: default;">
@@ -118,14 +116,14 @@
                 </div>
         <!-- Status Card -->
                 <div class="card">
-                    <h6 class="text-uppercase fw-bold small mb-4 text-secondary" style="letter-spacing: 0.05em;">Publication Status</h6>
+                    <h6 class="text-uppercase fw-bold small mb-4 text-secondary" style="letter-spacing: 0.05em;">{{ __('messages.publicaion_status') }}</h6>
                     <div class="form-check mb-2">
                         <input checked="" value="1" class="form-check-input" id="statusActive" {{ ($product->action ?? '') == '1' ? 'checked' : '' }} name="status" type="radio"/>
-                        <label class="form-check-label small" for="statusActive">Active</label>
+                        <label class="form-check-label small" for="statusActive">{{ __('messages.active') }}</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" value="0" id="statusDraft" {{ ($product->action ?? '') == '0' ? 'checked' : '' }} name="status" type="radio"/>
-                        <label  class="form-check-label small" for="statusDraft">Inactive </label>
+                        <label  class="form-check-label small" for="statusDraft">{{ __('messages.inactive') }} </label>
                     </div>
                 </div>
             </div>

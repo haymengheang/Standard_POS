@@ -21,10 +21,10 @@
         body.dark-mode {
             background-color: var(--bg-dark);
             color: #f1f5f9;
-            
+
         }
 
-        /* Navbar Styles */
+        /*             Navbar Styles */
         .navbar {
             background-color: var(--card-bg-light);
             border-bottom: 1px solid var(--border-color-light);
